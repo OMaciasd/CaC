@@ -1,0 +1,2 @@
+# symmetricPython
+Cordial saludo desde Cali, Colombia. El siguiente Código fuente se realiza como desarrollo de un programa con objetivo de prueba de entrevista laboral que imprime una cadena de texto para identificar sobre una lista de números enteros dentro de un arreglo con elementos inpares o pares el nivel de simetría que hay dentro del mismo, o en su defecto la asimetría del conjunto. Mil gracias por la atención prestada.
