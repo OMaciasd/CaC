@@ -1,0 +1,11 @@
+---
+- name: Configure Azure Function App Settings
+  hosts: localhost
+  tasks:
+  - name: Update Function App settings
+    azure_rm_functionapp:
+      resource_group: rginfradevops
+      storage_account: devtesttttt
+      name: dev-nanaykuna-testtttt
+      app_settings:
+        TZ: "America/Lima"
