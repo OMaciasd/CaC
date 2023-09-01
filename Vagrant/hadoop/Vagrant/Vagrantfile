@@ -1,0 +1,36 @@
+BOX_IMAGE = "ubuntu/lunar64"
+NODE_COUNT = 2
+SERVER = "hadoop"
+HOSTNAME = "master"
+
+def datanode_name(index)
+  "datanode#{index}"
+end
+
+def slave_name(index)
+  "slave#{index}"
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.define SERVER do |subconfig|
+    subconfig.vm.box = BOX_IMAGE
+    subconfig.vm.hostname = HOSTNAME
+    subconfig.vm.network :private_network, ip: "10.0.0.10"
+
+    # Si estás usando un script independiente:
+    subconfig.vm.provision "shell", path: "./scripting/install-hadoop.sh"
+  end
+
+  (1..NODE_COUNT).each do |i|
+    config.vm.define datanode_name(i) do |subconfig|
+      subconfig.vm.box = BOX_IMAGE
+      subconfig.vm.hostname = slave_name(i)
+      subconfig.vm.network :private_network, ip: "10.0.0.#{i + 10}"
+    end
+  end
+
+  # Install avahi on all machines
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get install -y avahi-daemon libnss-mdns
+  SHELL
+end
