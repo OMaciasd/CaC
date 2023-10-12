@@ -4,8 +4,15 @@
   tasks:
   - name: Update Function App settings
     azure_rm_functionapp:
-      resource_group: rginfradevops
-      storage_account: devtesttttt
-      name: dev-nanaykuna-testtttt
+      resource_group: {{ value.resource_group-name }}
+      storage_account: {{ value.storage_account-name }}
+      name: {{ value.linux_function_app-inventary_name }}
       app_settings:
         TZ: "America/Lima"
+
+  - name: Asignar permisos a la Web App para los secretos en Key Vault usando Azure CLI.
+     ansible.builtin.command: >
+       az keyvault set-policy --name {{ value.key_vault-name }}
+       --object-id {{ value.linux_web_app-object_id }}
+       --secret-permissions get list
+       
